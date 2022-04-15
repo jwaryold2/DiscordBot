@@ -60,6 +60,7 @@ public class DogAPICommand extends ListenerAdapter {
 				//event.getChannel().sendMessage(username).queue();
 
 				try {
+					/* get new api key here https://developer.riotgames.com/ */
 					ApiConfig config = new ApiConfig().setKey("RGAPI-5d3ca6d7-932f-4cea-ac8b-20ca5813db98");
 					RiotApi api = new RiotApi(config);
 
