@@ -128,6 +128,11 @@ public class Commands extends ListenerAdapter {
 			}
 			
 		}
+		if (args1[0].equals(".help")) {
+			event.getChannel().sendMessage("The total list of commands for this bot below:").queue();
+			event.getChannel().sendMessage("spam: spam @user").queue();
+			event.getChannel().sendMessage(" ").queue();
+		}
 		
 	
 		
