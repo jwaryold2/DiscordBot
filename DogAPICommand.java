@@ -24,6 +24,9 @@ public class DogAPICommand extends ListenerAdapter {
 	private static Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private String prefix = ".dog";
 	private String prefixMast = ".mastery";
+	private String weatherPrefix = ".weather";
+	private String url = "";
+	private String city = "";
 
 	public void onMessageReceived(MessageReceivedEvent event) {
 		String fullcommand = "";
@@ -60,7 +63,6 @@ public class DogAPICommand extends ListenerAdapter {
 				//event.getChannel().sendMessage(username).queue();
 
 				try {
-					/* get new api key here https://developer.riotgames.com/ */
 					ApiConfig config = new ApiConfig().setKey("RGAPI-5d3ca6d7-932f-4cea-ac8b-20ca5813db98");
 					RiotApi api = new RiotApi(config);
 
@@ -77,5 +79,54 @@ public class DogAPICommand extends ListenerAdapter {
 
 			}
 		}
+		if (args[0].equals(weatherPrefix)) {
+			try {
+				
+				if (args.length == 2) {
+					this.city = args[1];
+					//int lan = Integer.parseInt(args[1]);
+					//int lon = Integer.parseInt(args[2]);
+					//String url2 = "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=d4ab93c5782186c7435ffc4d50f40f29";
+					this.url = "http://api.openweathermap.org/data/2.5/weather?q="+city+"&APPID=9df7b4ccfa993b0d3ab4969ccc18ec98";
+					//event.getChannel().sendMessage(url).queue();
+				} else if (args.length == 3) {
+					//Unable to work gets an
+					this.city = args[1];
+					//city = city.substring(0,1).toUpperCase()+city.substring(1,city.length());
+					String state = args[2];
+					this.url = "http://api.openweathermap.org/data/2.5/weather?q="+city+","+state+"&APPID=9df7b4ccfa993b0d3ab4969ccc18ec98";
+				}
+				HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+				// event.getChannel().sendMessage(request);
+				HttpResponse<String> response = HTTP_CLIENT.<String>send(request, BodyHandlers.ofString());
+				String body = response.body();
+				//System.out.println();
+				
+				
+				WeatherResponse we = GSON.fromJson(body, WeatherResponse.class);
+				for(int i=0; i < we.weather.length;i++) {
+					event.getChannel().sendMessage("The main description of the weather in "+this.city+": "+we.weather[i].main).queue();
+					event.getChannel().sendMessage("The secondary description of the weather in "+this.city+" :"+we.weather[i].description).queue();
+					
+					double tempF = 1.8*(we.main.temp-273.15)+32;
+					double feelsF = 1.8*(we.main.feels_like-273.15)+32;
+					double min = 1.8*(we.main.temp_min-273.15)+32;
+					double max = 1.8*(we.main.temp_max-273.15)+32;
+					event.getChannel().sendMessageFormat("The temp is: %2f",tempF).queue();
+					event.getChannel().sendMessageFormat("Outside feels like: %2f",feelsF).queue();
+					event.getChannel().sendMessageFormat("Today's minimum temp is: %2f",min).queue();
+					event.getChannel().sendMessageFormat("Today's maximum temp is: %2f",max).queue();
+					
+				}
+				
+			} catch (Exception e) {
+				System.err.println(e);
+			}
+
+		}
+		
+		
+		
+		
 	}
 }
