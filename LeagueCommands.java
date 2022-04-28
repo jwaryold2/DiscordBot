@@ -13,7 +13,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.Button;
 
 public class LeagueCommands extends ListenerAdapter {
-	public String prefix = "~";
+	public String prefix = ".";
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent event) {
@@ -52,7 +52,7 @@ public class LeagueCommands extends ListenerAdapter {
 			eb.setColor(Color.lightGray);
 			eb.addBlankField(false);
 			
-			eb.setDescription("\n\n\nYou should play "+mid[randomMid]+" in the midlane." +"Here is the link to " + top[randomMid] + " in u.gg: "
+			eb.setDescription("\n\n\nYou should play "+mid[randomMid]+" in the midlane." +"Here is the link to " + mid[randomMid] + " in u.gg: "
 					+ "https://u.gg/lol/champions/" + mid[randomMid] + "/build?role=mid");
 			eb.setImage("https://static.u.gg/assets/lol/riot_static/12.5.1/img/champion/"+mid[randomMid]+".png");
 			//event.getChannel().sendMessage("You should play " + top[randomMid] + " in toplane.").queue();
@@ -117,21 +117,23 @@ public class LeagueCommands extends ListenerAdapter {
 			
 		}
 		if(args[0].equalsIgnoreCase("op.gg")) {
-			if (args.length > 1) {
-				String userName = args[1];
-				if(args[2].equals("ingame")) {
-					event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName+"/ingame").queue();
-				}else {
-					userName = userName.concat(" "+args[2]);
-					event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName).queue();
-					/*if (args[3].equals("ingame")) {
-						event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName+"/ingame").queue();
-					} else if (!args[3].equals("ingame")){
-						event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName).queue();
-					}*/
-				}
+			String userName = args[1];
+			String userName2;
+			if (args.length == 3 && !args[2].equals("ingame")) {
+				userName2 = args[2];
+				userName = userName+"%20"+userName2;
 			}
+			event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName+"/").queue();
+			if (args[2].equals("ingame")) {
+				event.getChannel().sendMessage("https://na.op.gg/summoners/na/"+userName+"/ingame").queue();
+			}
+			
 		}
+		
+		
+		
+		
+		
 		
 		}
 	}
