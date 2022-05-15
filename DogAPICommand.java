@@ -1,5 +1,7 @@
 package Main;
 
+import APIs.DogAPICollect;
+import APIs.WeatherResponse;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import java.net.URI;
@@ -17,6 +19,8 @@ import org.apache.commons.collections4.queue.AbstractQueueDecorator;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import APIs.*;
 
 public class DogAPICommand extends ListenerAdapter {
 	private static HttpClient HTTP_CLIENT = HttpClient.newBuilder().version(HttpClient.Version.HTTP_2)

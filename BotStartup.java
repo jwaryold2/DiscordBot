@@ -20,10 +20,11 @@ public class BotStartup {
         jda.enableIntents(GatewayIntent.GUILD_MEMBERS);
         jda.addEventListeners(new GenreCommands());
         jda.addEventListeners(new LeagueCommands());
-        jda.addEventListeners(new MathCommands());
-        jda.addEventListeners(new simpleCommands());
+        //jda.addEventListeners(new MathCommands());
+        //jda.addEventListeners(new simpleCommands());
         jda.addEventListeners(new fortuneCommands());
         jda.addEventListeners(new DogAPICommand());
+        jda.addEventListeners(new MapCommand());
         jda.build();
        
     }
