@@ -29,7 +29,7 @@ public class BotStartup {
 	}
 	//OTAzNTE2MTYyOTg4NTk3MjYw.YXuG_w.LMusUx7PKjR80Rdx0r4MFWPiyAc
     public static void main(String[]args) throws LoginException {
-        JDABuilder jda = JDABuilder.createDefault("OTAzNTE2MTYyOTg4NTk3MjYw.GR1m7n.KovqVhHS7dExTOp7ilMTc84btzePPg_7KZdCLA");
+        JDABuilder jda = JDABuilder.createDefault("OTAzNTE2MTYyOTg4NTk3MjYw.GMEE_v.A8ntMjmcQRo3kByLC-UESlrCr8egOEeKbEkgMo");
         jda.setActivity(Activity.playing("working"));
         jda.setStatus(OnlineStatus.ONLINE);//sets bots activity status
         jda.addEventListeners(new Commands());
@@ -46,6 +46,7 @@ public class BotStartup {
         jda.addEventListeners(new SimpleMovieC());
         jda.addEventListeners(new AniChanCommands());
         jda.addEventListeners(new ButtonListeners());
+        jda.addEventListeners(new ScraperCommands());
         jda.build();
         try {
 			System.out.println(System.getProperty("user.dir"));
